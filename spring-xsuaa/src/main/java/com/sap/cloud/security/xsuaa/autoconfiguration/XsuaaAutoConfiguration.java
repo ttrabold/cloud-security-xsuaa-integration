@@ -44,43 +44,45 @@ public class XsuaaAutoConfiguration {
 			return new XsuaaServiceConfigurationDefault();
 		}
 	}
-	
+
 	/**
-	 * Creates a new {@link XsuaaTokenFlows} bean that applications
-	 * can auto-wire into their controllers to perform a programmatic
-	 * token flow exchange.
-	 *  
-	 * @param restTemplate - the {@link RestTemplate} to use for the token flow exchange.
-	 * @param decoder - the decoder used for the tokens retrieved via the token flows.
+	 * Creates a new {@link XsuaaTokenFlows} bean that applications can auto-wire
+	 * into their controllers to perform a programmatic token flow exchange.
+	 * 
+	 * @param restTemplate
+	 *            - the {@link RestTemplate} to use for the token flow exchange.
+	 * @param decoder
+	 *            - the decoder used for the tokens retrieved via the token flows.
 	 * @return the {@link XsuaaTokenFlows} API.
 	 */
 	@Bean
-    @ConditionalOnMissingBean
-    public XsuaaTokenFlows xsuaaTokenFlows(RestTemplate restTemplate, VariableKeySetUriTokenDecoder decoder) {
-        return new XsuaaTokenFlows(restTemplate, decoder);
-    }
-    
-    /**
-     * Creates a {@link VariableKeySetUriTokenDecoder} instance 
-     * based on a {@code NimbusJwtDecoderJwkSupport} 
-     * implementation which is used by the {@link XsuaaTokenFlows} bean.
-     * @return the {@link VariableKeySetUriTokenDecoder} instance.
-     */
-    @Bean
-    @ConditionalOnMissingBean
-    public VariableKeySetUriTokenDecoder xsuaaTokenDecoder() {
-        return new NimbusTokenDecoder();
-    }
-    
-    /**
-     * Creates a {@link RestTemplate} instance 
-     * if the application has not yet defined any 
-     * yet.
-     * @return the {@link RestTemplate} instance.
-     */
-    @Bean
-    @ConditionalOnMissingBean
-    public RestTemplate xsuaaTokenFlowRestTemplate() {
-        return new RestTemplate();
-    }
+	@ConditionalOnMissingBean
+	public XsuaaTokenFlows xsuaaTokenFlows(RestTemplate restTemplate, VariableKeySetUriTokenDecoder decoder) {
+		return new XsuaaTokenFlows(restTemplate, decoder);
+	}
+
+	/**
+	 * Creates a {@link VariableKeySetUriTokenDecoder} instance based on a
+	 * {@code NimbusJwtDecoderJwkSupport} implementation which is used by the
+	 * {@link XsuaaTokenFlows} bean.
+	 * 
+	 * @return the {@link VariableKeySetUriTokenDecoder} instance.
+	 */
+	@Bean
+	@ConditionalOnMissingBean
+	public VariableKeySetUriTokenDecoder xsuaaTokenDecoder() {
+		return new NimbusTokenDecoder();
+	}
+
+	/**
+	 * Creates a {@link RestTemplate} instance if the application has not yet
+	 * defined any yet.
+	 * 
+	 * @return the {@link RestTemplate} instance.
+	 */
+	@Bean
+	@ConditionalOnMissingBean
+	public RestTemplate xsuaaTokenFlowRestTemplate() {
+		return new RestTemplate();
+	}
 }
