@@ -53,7 +53,7 @@ public class TestController {
      * @throws Exception in case of an internal error.
      */
     @GetMapping(value = "/v1/sayHello")
-    public Map<String, String> sayHello(@AuthenticationPrincipal Token token) {
+    public Map<String, String> sayHello(@AuthenticationPrincipal Token token) { // TODO XsuaaToken
 
         logger.info("Got the Xsuaa token: " + token);
         logger.info(token.toString());
@@ -88,26 +88,6 @@ public class TestController {
         logger.info(jwt.toString());
 
         return "Hello Jwt-Protected World!";
-    }
-    
-    /**
-     * Returns some generic information from the XsuaaToken.<br>
-     * Uses a XsuaaToken retrieved from the security context of Spring Security.
-     * <p>
-     * <b>Note:</b> XsuaaToken is just a Jwt, it is derived from it, and adds a few more convenience methods.
-     *
-     * @param jwt the JWT from the request injected by Spring Security.
-     * @return the requested address.
-     * @throws Exception in case of an internal error.
-     */
-    @GetMapping(value = "/v3/sayHello")
-    public String sayHello(@AuthenticationPrincipal XsuaaToken xsuaaToken) {
-
-        logger.info("Got the JWT (with XSUAA convenience on top): " + xsuaaToken);
-
-        logger.info(xsuaaToken.toString());
-
-        return "Hello Jwt-Protected XSUAA World! Notice: an XsuaaToken is still a Jwt!";
     }
 
     /**
@@ -147,7 +127,7 @@ public class TestController {
      * @return the Client Credentials Token fetched from XSUAA. Don't do this in production!
      * @throws Exception in case of any errors.
      */
-    @RequestMapping(value = "/v1/clientCredentialsToken", method = RequestMethod.GET)
+    @RequestMapping(value = "/v3/clientCredentialsToken", method = RequestMethod.GET)
     public Jwt fetchClientCredentialsToken(@AuthenticationPrincipal Jwt jwt) throws Exception { 
         
         String baseUrl = xsuaaBindindInformation.getUaaUrl();
@@ -172,7 +152,7 @@ public class TestController {
      * @return the Client Credentials Token fetched from XSUAA. Don't do this in production!
      * @throws Exception in case of any errors.
      */
-    @RequestMapping(value = "/v1/refreshToken", method = RequestMethod.GET)
+    @RequestMapping(value = "/v3/refreshToken", method = RequestMethod.GET)
     public Jwt refreshToken(@AuthenticationPrincipal Jwt jwt) throws Exception { 
         
         String baseUrl = xsuaaBindindInformation.getUaaUrl();
@@ -212,7 +192,7 @@ public class TestController {
      * @return the Client Credentials Token fetched from XSUAA. Don't do this in production!
      * @throws Exception in case of any errors.
      */
-    @RequestMapping(value = "/v1/userTokenFlow", method = RequestMethod.GET)
+    @RequestMapping(value = "/v3/userTokenFlow", method = RequestMethod.GET)
     public Jwt userTokenFlow(@AuthenticationPrincipal Jwt jwt) throws Exception { 
         
         String baseUrl = xsuaaBindindInformation.getUaaUrl();
